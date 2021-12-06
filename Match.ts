@@ -1,10 +1,10 @@
-import { RChar, ROne, RSeq, RStar, RSum, RZero, Sigma } from "./Lang";
+import { RAtom, ROne, RSeq, RStar, RSum, RZero, Sigma } from "./Lang";
 
 export type Nullable<R> = R extends RZero
   ? false
   : R extends ROne
   ? true
-  : R extends RChar<infer _>
+  : R extends RAtom<infer _>
   ? false
   : R extends RSum<infer F, infer G>
   ? Nullable<F> extends true
@@ -26,7 +26,7 @@ export type Derive<R, X extends Sigma> = Nullable<R> extends never
   ? RZero
   : R extends ROne
   ? RZero
-  : R extends RChar<infer C>
+  : R extends RAtom<infer C>
   ? X extends C
     ? ROne
     : RZero

@@ -1,4 +1,4 @@
-import { Sigma, Zero, One, RStar, RSum, RSeq, RZero, ROne, RChar } from "./Lang";
+import { Sigma, Zero, One, RStar, RSum, RSeq, RZero, ROne, RAtom } from "./Lang";
 
 export type ParseM<S> = S extends ""
   ? [{ type: "end" }, ""]
@@ -22,7 +22,7 @@ export type ParseM<S> = S extends ""
     : never
   : S extends `${infer c}${infer Rest}`
   ? c extends Sigma
-    ? [RChar<c>, Rest]
+    ? [RAtom<c>, Rest]
     : c extends Zero
     ? [RZero, Rest]
     : c extends One
