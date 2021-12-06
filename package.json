@@ -1,0 +1,11 @@
+{
+  "name": "ts-regexp",
+  "repository": "https://github.com/EvolveYourMind/ts-regexp.git",
+  "license": "MIT",
+  "scripts": {
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "typescript": "^4.5.2"
+  }
+}

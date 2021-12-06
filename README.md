@@ -26,13 +26,18 @@ import { Match } from "./Match";
 
 type r1 = Parse<"((((a)(b))*)+(a))">;
 
-type t1 = Match<r1, "a">; // expected type: true
-type t2 = Match<r1, "ab">; // expected type: true
-type t3 = Match<r1, "abababab">; // expected type: true
-type t4 = Match<r1, "ababababab">; // expected type: true
+const t1: Match<r1, "a"> = true;
+const t2: Match<r1, "ab"> = true;
+const t3: Match<r1, "abababab"> = true;
+const t4: Match<r1, "ababababab"> = true;
 
-type f1 = Match<r1, "b">; // expected type: false
-type f2 = Match<r1, "ba">; // expected type: false
-type f3 = Match<r1, "baa">; // expected type: false
-type f4 = Match<r1, "baaa">; // expected type: false
+const f1: Match<r1, "b"> = false;
+const f2: Match<r1, "ba"> = false;
+const f3: Match<r1, "baa"> = false;
+const f4: Match<r1, "baaa"> = false;
+
+type r2 = Parse<"(((a)(b))+(c))">;
+// For example, saying that "b" belongs to (((a)(b))+(c)) is wrong, thus TS rejects it and generates an error:
+const err: Match<r2, "b"> = true; // Type 'true' is not assignable to type 'false'
+
 ```
