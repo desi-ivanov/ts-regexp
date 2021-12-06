@@ -40,10 +40,10 @@ export type Derive<R, X extends Sigma> = Nullable<R> extends never
   ? RSeq<Derive<F, X>, R>
   : never;
 
-export type Accepts<R, X> = X extends ""
+export type Match<R, X> = X extends ""
   ? Nullable<R>
   : X extends `${infer C}${infer CS}`
   ? C extends Sigma
-    ? Accepts<Derive<R, C>, CS>
+    ? Match<Derive<R, C>, CS>
     : never
   : never;
