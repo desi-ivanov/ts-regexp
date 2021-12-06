@@ -19,7 +19,8 @@ type parsed = RSum<RSeq<RAtom<"a">, RAtom<"b">>, RAtom<"c">>
 ```
 
 ## Matching
-Given a regular expression `((((a)(b))*)+(a))`, TypeScript says it matches the strings `a`, `ab`, `abababab`, `ababababab`, but it rejects `b` ,`ba` ,`baa` ,`baaa`:
+Given a regular expression `((((a)(b))*)+(a))`, TypeScript determines that the regular expression matches the strings `a`, `ab`, `abababab`, `ababababab`, and doesn't match the strings `b` ,`ba` ,`baa` ,`baaa`. 
+The assignments of :
 ```ts
 import { Parse } from "./Parse";
 import { Match } from "./Match";
@@ -35,9 +36,13 @@ const f1: Match<r1, "b"> = false;
 const f2: Match<r1, "ba"> = false;
 const f3: Match<r1, "baa"> = false;
 const f4: Match<r1, "baaa"> = false;
+```
 
-type r2 = Parse<"(((a)(b))+(c))">;
-// For example, saying that "b" belongs to (((a)(b))+(c)) is wrong, thus TS rejects it and generates an error:
-const err: Match<r2, "b"> = true; // Type 'true' is not assignable to type 'false'
+Given a regular expression `(((a)(b))+(c))` (which is `(ab)+c` with simplified syntax), the string `b` does not belong to the language of the regular expression, thus when assigning a value `true` to a variable of type `Match<Parse<"(((a)(b))+(c))">, "b">`, the type checker fails and throws `Type 'true' is not assignable to type 'false'`
+```ts
+// Type 'true' is not assignable to type 'false'
+const err: Match<Parse<"(((a)(b))+(c))">, "b"> = true; 
 
+// Type 'false' is not assignable to type 'true'
+const err2: Match<Parse<"(((a)(b))+(c))">, "ab"> = false; 
 ```
