@@ -1,8 +1,6 @@
 import { Sigma, Zero, One, RStar, RSum, RSeq, RZero, ROne, RAtom } from "./Lang";
 
-export type ParseM<S> = S extends ""
-  ? [{ type: "end" }, ""]
-  : S extends `(${infer Rest}`
+export type ParseM<S> = S extends `(${infer Rest}`
   ? ParseM<Rest> extends [infer Left, infer Remain]
     ? Remain extends `)${infer Rest2}`
       ? Rest2 extends ""
@@ -27,8 +25,6 @@ export type ParseM<S> = S extends ""
     ? [RZero, Rest]
     : c extends One
     ? [ROne, Rest]
-    : c extends ")"
-    ? [{ type: "end" }, S]
     : never
   : never;
 
