@@ -14,31 +14,32 @@ The syntax of regular expressions is defined as follows:
 ## Parsing
 Given an alphabet `{a,b,c}` and a regular expression `(((a)(b))+(c))`, the parser derives the following AST:
 ```ts
-type r2 = Parse<"(((a)(b))+(c))">
+type r = Parse<"(((a)(b))+(c))">
 type parsed = RSum<RSeq<RAtom<"a">, RAtom<"b">>, RAtom<"c">>
 ```
 
 ## Matching
-Given a regular expression `((((a)(b))*)+(a))`, TypeScript determines that the regular expression matches the strings `a`, `ab`, `abababab`, `ababababab`, and doesn't match the strings `b` ,`ba` ,`baa` ,`baaa`. 
+Given a regular expression `((((a)(b))*)+(a))` (which is `(ab)* + a` with simplified syntax), TypeScript determines that the regular expression matches the strings `a`, `ab`, `abababab`, `ababababab`, and doesn't match the strings `b` ,`ba` ,`baa` ,`baaa`. 
 The assignments of :
 ```ts
 import { Parse } from "./Parse";
 import { Match } from "./Match";
 
-type r1 = Parse<"((((a)(b))*)+(a))">;
+type r = Parse<"((((a)(b))*)+(a))">;
 
-const t1: Match<r1, "a"> = true;
-const t2: Match<r1, "ab"> = true;
-const t3: Match<r1, "abababab"> = true;
-const t4: Match<r1, "ababababab"> = true;
+const t1: Match<r, "a"> = true;
+const t2: Match<r, "ab"> = true;
+const t3: Match<r, "abababab"> = true;
+const t4: Match<r, "ababababab"> = true;
 
-const f1: Match<r1, "b"> = false;
-const f2: Match<r1, "ba"> = false;
-const f3: Match<r1, "baa"> = false;
-const f4: Match<r1, "baaa"> = false;
+const f1: Match<r, "b"> = false;
+const f2: Match<r, "ba"> = false;
+const f3: Match<r, "baa"> = false;
+const f4: Match<r, "baaa"> = false;
 ```
 
-Given a regular expression `(((a)(b))+(c))` (which is `(ab)+c` with simplified syntax), the string `b` does not belong to the language of the regular expression, thus when assigning a value `true` to a variable of type `Match<Parse<"(((a)(b))+(c))">, "b">`, the type checker fails and throws `Type 'true' is not assignable to type 'false'`
+Given a regular expression `(((a)(b))+(c))`, which is `(ab) + c` with simplified syntax, the string `b` does not belong to the language of the regular expression. In fact, TypeScript evaluates that `Match<Parse<"(((a)(b))+(c))">, "b">` is `false`. 
+Therefore, assigning a value `true` to a variable of type `Match<Parse<"(((a)(b))+(c))">, "b">` is wrong and the type-checker fails and throws `Type 'true' is not assignable to type 'false'`
 ```ts
 // Type 'true' is not assignable to type 'false'
 const err: Match<Parse<"(((a)(b))+(c))">, "b"> = true; 
