@@ -10,6 +10,7 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
     "strict": true,
     "lib": ["es2021"],
   },
