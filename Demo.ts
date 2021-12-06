@@ -11,3 +11,5 @@ type f1 = Match<r1, "b">; // expected type: false
 type f2 = Match<r1, "ba">; // expected type: false
 type f3 = Match<r1, "baa">; // expected type: false
 type f4 = Match<r1, "baaa">; // expected type: false
+
+type r2 = Parse<"(((a)(b))+(c))">
