@@ -19,8 +19,7 @@ type parsed = RSum<RSeq<RAtom<"a">, RAtom<"b">>, RAtom<"c">>
 ```
 
 ## Matching
-Given a regular expression `((((a)(b))*)+(a))` (which is `(ab)* + a` with simplified syntax), TypeScript determines that the regular expression matches the strings `a`, `ab`, `abababab`, `ababababab`, and doesn't match the strings `b` ,`ba` ,`baa` ,`baaa`. 
-The assignments of :
+Given a regular expression `((((a)(b))*)+(a))` (which is `(ab)* + a` with simplified syntax), TypeScript determines that the regular expression matches the strings `a`, `ab`, `abababab`, `ababababab`, and doesn't match the strings `b` ,`ba` ,`baa` ,`baaa`:
 ```ts
 import { Parse } from "./Parse";
 import { Match } from "./Match";
