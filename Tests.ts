@@ -1,25 +1,24 @@
+import { RAtom, RSum, RSeq, RStar } from "./Lang"
 import { Match } from "./Match";
 import { Parse } from "./Parse";
 import { Reconstruct } from "./Reconstruct";
-
-type AssertEqual<A, B> = A extends B ? B extends A ? true : false : false;
-type AssertNotEqual<A, B> = A extends B ? false : true;
+import { Equal } from "./Truth";
 
 type r = "((((a)(b))*)+(a))";
 type f = "((((c)*)(((a)(b))*))*)";
 
-const t1: AssertNotEqual<Parse<r>, never> = true;
-const t2: AssertNotEqual<Parse<f>, never> = true;
+const t1: Equal<Parse<r>, never> = false;
+const t2: Equal<Parse<f>, never> = false;
 
-const t4: AssertEqual<Reconstruct<Parse<r>>, r> = true;
-const t3: AssertEqual<Reconstruct<Parse<f>>, f> = true;
+const t4: Equal<Reconstruct<Parse<r>>, r> = true;
+const t3: Equal<Reconstruct<Parse<f>>, f> = true;
 
-const t5: AssertEqual<Parse<"abc">, "Invalid input"> = true;
-const t6: AssertEqual<Parse<"(aa)">, "Invalid input"> = true;
-const t7: AssertEqual<Parse<"(a)bbbb">, "Invalid input"> = true;
+const t5: Equal<Parse<"abc">, "Invalid input"> = true;
+const t6: Equal<Parse<"(aa)">, "Invalid input"> = true;
+const t7: Equal<Parse<"(a)bbbb">, "Invalid input"> = true;
 
-const t8: AssertNotEqual<Parse<r>, "Invalid input"> = true;
-const t9: AssertNotEqual<Parse<f>, "Invalid input"> = true;
+const t8: Equal<Parse<r>, "Invalid input"> = false;
+const t9: Equal<Parse<f>, "Invalid input"> = false;
 
 const t10: Match<Parse<r>, "a"> = true;
 const t11: Match<Parse<r>, "b"> = false;
@@ -40,3 +39,6 @@ const t24: Match<Parse<f>, "ccb"> = false;
 const t25: Match<Parse<f>, "ccab"> = true;
 const t26: Match<Parse<f>, "ccabab"> = true;
 const t27: Match<Parse<f>, "cababc"> = true;
+
+const t28: Equal<Parse<r>, RSum<RStar<RSeq<RAtom<"a">, RAtom<"b">>>, RAtom<"a">>> = true;
+const t29: Equal<Parse<r>, RSum<RStar<RSeq<RAtom<"a">, RAtom<"b">>>, RAtom<"b">>> = false;
