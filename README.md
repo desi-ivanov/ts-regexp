@@ -47,7 +47,7 @@ type f5 = Matches<"(a)*", "b"> // false
 type f6 = Matches<"(a)*", "ba"> // false
 type f7 = Matches<"(a)*", "c"> // false
 ```
-Another example (the syntax is a bit heavy due to limitations of the current parser implementation):
+Another example for `(ab)* + c` (the syntax is a bit heavy due to limitations of the current parser implementation):
 ```ts
 type t1 = Matches<"((((a)(b))*)+(c))", "c"> // true
 type t2 = Matches<"((((a)(b))*)+(c))", "ab"> // true
