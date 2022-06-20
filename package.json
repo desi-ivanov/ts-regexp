@@ -6,6 +6,6 @@
     "tsc:check": "tsc --noEmit"
   },
   "dependencies": {
-    "typescript": "^4.5.2"
+    "typescript": "^4.7.4"
   }
 }
