@@ -35,7 +35,7 @@ type parsed = RSeq<RAtom<"a">, RAtom<"b">>
 ## Matching
 The matching is available in [Match.ts](Match.ts) and uses derivatives on regular expression to match the strings. 
 
-For example, given the regular expression `(a)*`, TypeScript infers that the regular expression matches the strings ` `, `a`, `aa`, `aaaa`, `aaaa`, but doesn't match the strings `b`, `ba`, `ab`, `c`:
+For example, given the regular expression `(a)*`, TypeScript infers that the regular expression matches the strings ` `, `a`, `aa`, `aaa`, `aaaa`, but doesn't match the strings `b`, `ba`, `c`:
 ```ts
 type t5 = Matches<"(a)*", ""> // true
 type t6 = Matches<"(a)*", "a"> // true
