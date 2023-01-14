@@ -59,3 +59,7 @@ type f2 = Matches<"((((a)(b))*)+(c))", "ba"> // false
 type f3 = Matches<"((((a)(b))*)+(c))", "ca"> // false
 type f4 = Matches<"((((a)(b))*)+(c))", "ac"> // false
 ```
+
+# License
+
+MIT
