@@ -12,7 +12,7 @@ The syntax of regular expressions is defined as follows:
 - Given a regular expression `F`, the star is defined as `F*`
 
 ## Parsing
-In the [Parse.ts](Parse.ts) file there is an implementation of a parser that can derive the AST following the above syntax.
+In the [Parse.ts](src/Parse.ts) file there is an implementation of a parser that can derive the AST following the above syntax.
 It takes a raw string passed as a literal type and concretely produces a composition of the following types:
 ```ts
 type Sigma      = "a" | "b" | "c" | "d" | "e" | "f" | "g";
@@ -33,7 +33,7 @@ type parsed = RSeq<RAtom<"a">, RAtom<"b">>
 ```
 
 ## Matching
-The matching is available in [Match.ts](Match.ts) and uses derivatives on regular expression to match the strings. 
+The matching is available in [Match.ts](src/Match.ts) and uses derivatives on regular expression to match the strings. 
 
 For example, given the regular expression `(a)*`, TypeScript infers that the regular expression matches the strings ` `, `a`, `aa`, `aaa`, `aaaa`, but doesn't match the strings `b`, `ba`, `c`:
 ```ts
